@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile | Seeker Web</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200 text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-blue-600 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
+      <a href="home.html" class="text-2xl font-bold bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 transition">
+        SeekerWeb
+      </a>
+      <button class="text-2xl md:hidden" onclick="toggleMenu()">☰</button>
+      <ul id="nav-links" class="hidden md:flex space-x-6 font-semibold items-center">
+        <li><a href="about.html" class="hover:underline">About</a></li>
+        <li><a href="partner.html" class="hover:underline">Partners</a></li>
+        <li><a href="events.html" class="hover:underline">Events</a></li>
+        <li><a href="board.html" class="hover:underline">Board</a></li>
+        <li><a href="contact.html" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Edit Profile Form -->
+  <section class="max-w-3xl mx-auto mt-16 px-6">
+    <div class="bg-white/70 backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-blue-100">
+      <h2 class="text-3xl font-bold text-blue-700 mb-6">Edit Your Profile</h2>
+
+     <form id="profileForm" class="space-y-6">
+  <!-- Profile Image Upload with Preview -->
+  <div class="flex flex-col items-center">
+    <img id="previewImage" src="https://via.placeholder.com/100" alt="Preview" class="w-24 h-24 rounded-full border-2 border-blue-300 shadow mb-3">
+    <input type="file" id="imageInput" accept="image/*" class="text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+  </div>
+
+  <!-- Name -->
+  <div>
+    <label for="name" class="block font-semibold mb-2 text-blue-700">Full Name</label>
+    <input type="text" id="name" name="name" class="w-full border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <label for="email" class="block font-semibold mb-2 text-blue-700">Email</label>
+    <input type="email" id="email" name="email" class="w-full border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+  </div>
+
+  <!-- Bio -->
+  <div>
+    <label for="bio" class="block font-semibold mb-2 text-blue-700">Bio</label>
+    <textarea id="bio" name="bio" rows="4" class="w-full border border-blue-200 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+  </div>
+
+  <!-- Submit -->
+  <div class="text-right">
+    <button type="submit" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+      Save Changes
+    </button>
+  </div>
+</form>
+
+
+      <div class="mt-6 text-center">
+        <a href="account.html" class="text-blue-700 hover:underline">&larr; Back to Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Save to Local Storage Script -->
+  <script>
+  const form = document.getElementById('profileForm');
+  const previewImage = document.getElementById('previewImage');
+  const imageInput = document.getElementById('imageInput');
+
+  // Load data on page load
+  window.onload = function () {
+    document.getElementById('name').value = localStorage.getItem('userName') || '';
+    document.getElementById('email').value = localStorage.getItem('userEmail') || '';
+    document.getElementById('bio').value = localStorage.getItem('userBio') || '';
+    const savedImage = localStorage.getItem('userImage');
+    if (savedImage) previewImage.src = savedImage;
+  };
+
+  // Preview and store image
+  imageInput.addEventListener('change', function () {
+    const file = imageInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImage.src = e.target.result;
+        localStorage.setItem('userImage', e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Save other profile data
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    localStorage.setItem('userName', document.getElementById('name').value.trim());
+    localStorage.setItem('userEmail', document.getElementById('email').value.trim());
+    localStorage.setItem('userBio', document.getElementById('bio').value.trim());
+    window.location.href = 'account.html';
+  });
+</script>
+
+
+</body>
+</html>

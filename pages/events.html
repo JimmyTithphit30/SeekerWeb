@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | Seeker Web</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+   <!-- Navbar -->
+<nav class="bg-blue-600 text-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
+    
+    <!-- Logo Link -->
+    <a href="home.html" class="text-2xl font-bold bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 transition">
+      SeekerWeb
+    </a>
+
+    <!-- Burger Menu for Mobile -->
+    <button class="text-2xl md:hidden" onclick="toggleMenu()">☰</button>
+
+    <!-- Nav Links -->
+    <ul id="nav-links" class="hidden md:flex space-x-6 font-semibold items-center">
+      <li><a href="about.html" class="hover:underline">About</a></li>
+      <li><a href="partner.html" class="hover:underline">Partners</a></li>
+      <li><a href="events.html" class="hover:underline">Events</a></li>
+      <li><a href="board.html" class="hover:underline">Board</a></li>
+      <li><a href="contact.html" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100">Contact</a></li>
+      <li>
+        <a href="account.html" title="Account" class="hover:bg-gray-100">
+          <!-- Account Icon (Heroicons outline) -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 20.25a8.25 8.25 0 0115 0" />
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  
+
+</body>
+</html>

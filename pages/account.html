@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account | Seeker Web</title>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200 text-gray-800">
+
+  <!-- Navbar -->
+<nav class="bg-blue-600 text-white shadow-md">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
+    
+    <!-- Logo Link -->
+    <a href="home.html" class="text-2xl font-bold bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100 transition">
+      SeekerWeb
+    </a>
+
+    <!-- Burger Menu for Mobile -->
+    <button class="text-2xl md:hidden" onclick="toggleMenu()">☰</button>
+
+    <!-- Nav Links -->
+    <ul id="nav-links" class="hidden md:flex space-x-6 font-semibold items-center">
+      <li><a href="about.html" class="hover:underline">About</a></li>
+      <li><a href="partner.html" class="hover:underline">Partners</a></li>
+      <li><a href="events.html" class="hover:underline">Events</a></li>
+      <li><a href="board.html" class="hover:underline">Board</a></li>
+      <li><a href="contact.html" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100">Contact</a></li>
+      <li>
+        <a href="account.html" title="Account" class="hover:bg-gray-100">
+          <!-- Account Icon (Heroicons outline) -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 20.25a8.25 8.25 0 0115 0" />
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+  <!-- Container -->
+  <section class="max-w-xl mx-auto mt-16 px-6">
+
+    <!-- LOGIN / SIGNUP FORM -->
+    <!-- LOGIN / SIGNUP FORM -->
+<div id="authForm" class="bg-white/70 backdrop-blur-lg shadow-xl rounded-xl p-8 border border-blue-100">
+  <h2 id="authTitle" class="text-2xl font-bold text-blue-700 mb-4 text-center">Sign Up</h2>
+
+  <form id="authFormElement" class="space-y-4">
+  <div id="nameField">
+    <input type="text" id="authName" placeholder="Full Name" class="w-full p-3 border border-blue-200 rounded">
+  </div>
+  <input type="email" id="authEmail" placeholder="Email" class="w-full p-3 border border-blue-200 rounded" required>
+  <input type="password" id="authPass" placeholder="Password" class="w-full p-3 border border-blue-200 rounded" required>
+
+  <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition">
+    Sign Up
+  </button>
+</form>
+
+
+  <p class="text-center text-sm mt-4">
+    Already have an account?
+    <button onclick="toggleMode()" class="text-blue-600 hover:underline" id="toggleBtn">Log in</button>
+  </p>
+</div>
+
+
+    <!-- PROFILE SECTION -->
+    <div id="profileCard" class="hidden bg-white/70 backdrop-blur-lg shadow-xl rounded-xl p-8 border border-blue-100 text-center">
+      <img id="profileImage" src="https://via.placeholder.com/100" alt="Profile" class="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-blue-300 shadow">
+      <h2 id="displayName" class="text-2xl font-bold text-blue-700"></h2>
+      <p id="displayEmail" class="text-blue-600 mb-2"></p>
+      <p id="displayBio" class="text-gray-700 text-sm mb-6">Member since July 2025</p>
+
+      <a href="editprofile.html" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Edit Profile</a>
+      <button onclick="logout()" class="ml-4 inline-block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Log Out</button>
+    </div>
+
+  </section>
+
+  <script>
+  let isLoginMode = false;
+
+  const authForm = document.getElementById("authForm");
+  const authFormElement = document.getElementById("authFormElement");
+  const authTitle = document.getElementById("authTitle");
+  const toggleBtn = document.getElementById("toggleBtn");
+
+  const authName = document.getElementById("authName");
+  const authEmail = document.getElementById("authEmail");
+  const authPass = document.getElementById("authPass");
+
+  const profileCard = document.getElementById("profileCard");
+  const displayName = document.getElementById("displayName");
+  const displayEmail = document.getElementById("displayEmail");
+  const displayBio = document.getElementById("displayBio");
+  const profileImage = document.getElementById("profileImage");
+
+  // Show profile if logged in
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    authForm.classList.add("hidden");
+    profileCard.classList.remove("hidden");
+
+    displayName.textContent = localStorage.getItem("userName") || "User";
+    displayEmail.textContent = localStorage.getItem("userEmail") || "email@example.com";
+    displayBio.textContent = localStorage.getItem("userBio") || "Welcome to your profile!";
+    const img = localStorage.getItem("userImage");
+    if (img) profileImage.src = img;
+  }
+
+  // Handle login/signup
+  authFormElement.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = authName.value.trim();
+    const email = authEmail.value.trim();
+    const pass = authPass.value.trim();
+
+    if (!email || !pass || (!isLoginMode && !name)) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    if (isLoginMode) {
+      // LOGIN MODE
+      const savedEmail = localStorage.getItem("userEmail");
+      const savedPass = localStorage.getItem("userPass");
+
+      if (email === savedEmail && pass === savedPass) {
+        localStorage.setItem("isLoggedIn", "true");
+        location.reload();
+      } else {
+        alert("Incorrect email or password.");
+      }
+
+    } else {
+      // SIGN-UP MODE
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userPass", pass);
+      localStorage.setItem("userBio", "Welcome to your profile!");
+      localStorage.setItem("isLoggedIn", "true");
+      location.reload();
+    }
+  });
+
+  // Toggle between login and sign-up
+  function toggleMode() {
+    isLoginMode = !isLoginMode;
+    authTitle.textContent = isLoginMode ? "Log In" : "Sign Up";
+    toggleBtn.textContent = isLoginMode ? "Sign up" : "Log in";
+    authName.parentElement.style.display = isLoginMode ? "none" : "block";
+    authFormElement.querySelector("button").textContent = isLoginMode ? "Log In" : "Sign Up";
+  }
+
+  // Log out
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    location.reload();
+  }
+</script>
+
+
+</body>
+</html>
