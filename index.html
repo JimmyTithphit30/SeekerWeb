@@ -1,104 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seeker Web</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEAKERS - Building Belonging for SEA Professionals in Europe</title>
+
+  <!-- Critical above-the-fold CSS -->
   <style>
-    html {
-      scroll-behavior: smooth;
+    :root { --primary-blue:#1e40af; --light-blue:#3b82f6; }
+    .gradient-bg { background: linear-gradient(135deg,var(--primary-blue) 0%,var(--light-blue) 100%); }
+    .fade-in-up { opacity:0; transform:translateY(30px); transition:opacity .6s ease-out, transform .6s ease-out; }
+    .fade-in-up.visible { opacity:1; transform:translateY(0); }
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/Inter-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    /* Disable heavy animations for performance */
+    .floating-animation, .pulse-animation, .ripple-effect {
+      animation: none !important;
     }
   </style>
+
+  <!-- Main Tailwind CSS -->
+  <link rel="stylesheet" href="style.min.css">
+
+  <!-- Simplified utility styles -->
+  <style>
+    .nav-blur { backdrop-filter: blur(10px); background: rgba(255,255,255,0.9); }
+    .card-hover { transition: transform .2s ease; }
+    .card-hover:hover { transform: translateY(-4px); }
+    .text-gradient { background: linear-gradient(135deg,#1e40af,#3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
 </head>
-
-<body class="bg-white text-gray-800">
-
- <!-- Navbar -->
-<nav class="bg-blue-600 text-white shadow-md">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center relative">
-    
-    <!-- Logo Link -->
-    <a href="home.html" class="text-2xl font-bold text-white-600 px-4 py-2 rounded ">
-      SeekerWeb
-    </a>
-
-    <!-- Burger Menu for Mobile -->
+<body class="bg-white text-gray-900">
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 nav-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <div class="text-2xl font-bold text-gradient">SEAKERS</div>
+        </div>
+        
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-8">
+            <a href="#home" class="hover:text-blue-600 transition-colors">Home</a>
+            <a href="#about" class="hover:text-blue-600 transition-colors">About</a>
+            <a href="#programs" class="hover:text-blue-600 transition-colors">Programs</a>
+            <a href="#membership" class="hover:text-blue-600 transition-colors">Membership</a>
+            <a href="#contact" class="hover:text-blue-600 transition-colors">Contact</a>
+          </div>
+        </div>
+        <!-- Burger Menu for Mobile -->
     <button class="text-2xl md:hidden" onclick="toggleMenu()">☰</button>
-
-    <!-- Nav Links -->
-    <ul id="nav-links" class="hidden md:flex space-x-6 font-semibold items-center">
-      <li><a href="pages/about.html" class="hover:underline">About</a></li>
-      <li><a href="pages/partner.html" class="hover:underline">Partners</a></li>
-      <li><a href="pages/events.html" class="hover:underline">Events</a></li>
-      <li><a href="pages/board.html" class="hover:underline">Board</a></li>
-      <li><a href="pages/contact.html" class="bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-100">Contact</a></li>
-      <li>
-        <a href="account.html" title="Account" class="hover:bg-gray-100">
-          <!-- Account Icon (Heroicons outline) -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 20.25a8.25 8.25 0 0115 0" />
-          </svg>
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-
-  <!-- Hero -->
-  <header class="bg-[url('https://images.unsplash.com/photo-1519389950473-47ba0277781c')] bg-cover bg-center text-white py-32 text-center">
-    <div class="max-w-4xl mx-auto px-4">
-      <h1 class="text-5xl font-bold mb-4">Seeker Web</h1>
-      <p class="text-xl mb-6">Your gateway to innovation and growth.</p>
-      <a href="#about" class="inline-block bg-blue-600 px-6 py-3 text-white font-semibold rounded hover:bg-blue-700 transition">Learn More</a>
+        <!-- Mobile dropdown menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+      <a href="#home" class="block px-6 py-3 hover:bg-gray-100">Home</a>
+      <a href="#about" class="block px-6 py-3 hover:bg-gray-100">About</a>
+      <a href="#programs" class="block px-6 py-3 hover:bg-gray-100">Programs</a>
+      <a href="#membership" class="block px-6 py-3 hover:bg-gray-100">Membership</a>
+      <a href="#contact" class="block px-6 py-3 hover:bg-gray-100">Contact</a>
     </div>
-  </header>
-
-  <!-- About -->
-  <section id="about" class="py-20 bg-white text-center">
-    <div class="max-w-3xl mx-auto px-4">
-      <h2 class="text-3xl font-bold mb-4">About Us</h2>
-      <p class="text-gray-600 text-lg">We connect ideas, people, and technologies to create impactful solutions.</p>
+  </nav>
+      </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- Partners -->
-  <section id="partners" class="py-20 bg-gray-100 text-center">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-3xl font-bold mb-8">Our Partners</h2>
-      <div class="flex flex-wrap justify-center items-center gap-10">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" class="h-12">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Apple-logo.png" alt="Apple" class="h-12">
+
+   <!-- Hero Section with real image + overlay -->
+  <section
+    id="home"
+    class="relative py-24 md:py-32 overflow-hidden"
+    style="
+      background-image:
+        linear-gradient(rgba(30,64,175,0.6), rgba(59,130,246,0.6)),
+        url('images/photo_2025-07-30_03-14-04.jpg');
+      background-size: contain;
+      background-position: top center;
+      min-height: 60vh;
+    "
+  >
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-up text-center">
+      <h1 class="text-3xl md:text-5xl font-bold text-white mb-3">
+        Building <span class="text-blue-200">Belonging</span>
+      </h1>
+      <p class="text-base md:text-lg text-blue-100 mb-4">
+        For Southeast Asian Professionals in Europe
+      </p>
+      <p class="text-sm md:text-base text-blue-200 mb-6">
+        A community-driven platform rooted in intimacy, empowerment, and cultural pride
+      </p>
+      <div class="space-x-3">
+        <button class="bg-white text-blue-600 px-5 py-2 text-sm font-semibold rounded-full hover:bg-blue-50 transition-colors">
+          Join Our Community
+        </button>
+        <button class="border-2 border-white text-white px-5 py-2 text-sm font-semibold rounded-full hover:bg-white hover:text-blue-600 transition-colors">
+          Learn More
+        </button>
       </div>
     </div>
   </section>
 
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in-up">
+        <h2 class="text-4xl font-bold text-gradient mb-6">Our Story</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Born from the legacy of SEASAW, SEAKERS is the natural evolution serving graduates, working professionals, and emerging cultural leaders across Europe.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="fade-in-up">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">The Challenge We Address</h3>
+          <p class="text-gray-600 mb-6">Southeast Asians make up a vibrant and growing population in Europe, yet many face a lack of representation, cross-cultural invisibility, and fragmented community support after university.</p>
+          <p class="text-gray-600">SEA professionals often feel torn between assimilation and invisibility. SEAKERS changes that by providing an intentional space centered on shared identity, cultural pride, and professional growth.</p>
+        </div>
+        <div class="fade-in-up">
+          <div class="bg-white p-8 rounded-2xl shadow-lg">
+            <h4 class="text-xl font-bold text-gray-900 mb-4">Our Vision</h4>
+            <p class="text-blue-600 font-semibold mb-4">To become Europe's leading Southeast Asian professional and cultural network, rooted in community, creativity, and care.</p>
+            <div class="space-y-3">
+              <div class="flex items-center"><div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div><span class="text-gray-600">Shared identity and heritage</span></div>
+              <div class="flex items-center"><div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div><span class="text-gray-600">Cultural pride and storytelling</span></div>
+              <div class="flex items-center"><div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div><span class="text-gray-600">Career development and collaboration</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold text-gradient mb-6">Our Core Values</h2>
+                <p class="text-xl text-gray-600">The principles that guide everything we do</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover fade-in-up">
+                    <div class="w-12 h-12 bg-blue-500 rounded-xl mb-6 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Intimacy</h3>
+                    <p class="text-gray-600">Depth over scale; quality over quantity in all our connections</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover fade-in-up">
+                    <div class="w-12 h-12 bg-blue-500 rounded-xl mb-6 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Empowerment</h3>
+                    <p class="text-gray-600">Nurturing SEA leadership across all sectors and industries</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover fade-in-up">
+                    <div class="w-12 h-12 bg-blue-500 rounded-xl mb-6 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Cultural Pride</h3>
+                    <p class="text-gray-600">Celebrating SEA heritage with nuance, authenticity, and style</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover fade-in-up">
+                    <div class="w-12 h-12 bg-blue-500 rounded-xl mb-6 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Soft Power</h3>
+                    <p class="text-gray-600">Elevating influence through creativity, emotion, and thoughtful design</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl card-hover fade-in-up">
+                    <div class="w-12 h-12 bg-blue-500 rounded-xl mb-6 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Vulnerability</h3>
+                    <p class="text-gray-600">Holding space for honest, authentic lived experiences</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold text-gradient mb-6">Our Programs</h2>
+                <p class="text-xl text-gray-600">Diverse experiences designed to connect, inspire, and empower</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEA After Dark</h3>
+                    <p class="text-gray-600 mb-4">Quarterly flagship events bringing together the community for meaningful connections</p>
+                    <div class="text-blue-500 font-semibold">Flagship Events</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEA x Soul Dinners</h3>
+                    <p class="text-gray-600 mb-4">Intimate gatherings centered around food, culture, and storytelling</p>
+                    <div class="text-blue-500 font-semibold">Cultural Connection</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Career Workshops</h3>
+                    <p class="text-gray-600 mb-4">CV clinics, entrepreneurship sessions, and professional development</p>
+                    <div class="text-blue-500 font-semibold">Professional Growth</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEA Diaspora Map</h3>
+                    <p class="text-gray-600 mb-4">Visual network connecting members across Europe and beyond</p>
+                    <div class="text-blue-500 font-semibold">Community Building</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Digital Storytelling</h3>
+                    <p class="text-gray-600 mb-4">Zines, newsletters, and upcoming podcast "SEA Talks"</p>
+                    <div class="text-blue-500 font-semibold">Creative Expression</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-2xl shadow-lg card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Wellness Sessions</h3>
+                    <p class="text-gray-600 mb-4">Mini retreats, creative journaling, and guided reflection spaces</p>
+                    <div class="text-blue-500 font-semibold">Personal Growth</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Section -->
+    <section id="membership" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-bold text-gradient mb-6">Join Our Community</h2>
+                <p class="text-xl text-gray-600">Choose the membership tier that fits your journey</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-50 p-6 rounded-2xl card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Explorer</h3>
+                    <div class="text-3xl font-bold text-blue-500 mb-4">Free</div>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Newsletter</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Community access</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Event discounts</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Networking</li>
+                    </ul>
+                    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        Get Started
+                    </button>
+                </div>
+                
+                <div class="bg-blue-50 p-6 rounded-2xl border-2 border-blue-200 card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Connector</h3>
+                    <div class="text-3xl font-bold text-blue-500 mb-4">€5/Month</div>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>All Explorer perks</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Member badge</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Directory access</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Free events</li>
+                    </ul>
+                    <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        Join Now
+                    </button>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-2xl card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Catalyst</h3>
+                    <div class="text-3xl font-bold text-blue-500 mb-4">€100/Year</div>
+                    <ul class="space-y-2 text-gray-600 mb-6">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>All Connector perks</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Guest passes</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Early invites</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>Special merch</li>
+                    </ul>
+                    <button class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                        Upgrade
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-6 rounded-2xl card-hover fade-in-up">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Patron</h3>
+                    <div class="text-3xl font-bold text-blue-600 mb-4">€250/Year</div>
+                    <ul class="space-y-2 text-gray-700 mb-6">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>All Catalyst perks</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>Co-host recognition</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>Supporter wall listing</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>VIP access</li>
+                    </ul>
+                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Become a Patron
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 gradient-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center fade-in-up">
+                <h2 class="text-4xl font-bold text-white mb-6">Let's Build Together</h2>
+                <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+                    Ready to join the movement? We welcome partnerships, collaborations, and new community members.
+                </p>
+                <div class="space-x-4">
+                    <button class="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-all ripple">
+                        Get In Touch
+                    </button>
+                    <button class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all">
+                        Partnership Inquiries
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
   <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-400 text-center py-6">
-    <p>&copy; 2025 Seeker Web. All rights reserved.</p>
-  </footer>
+<footer class="bg-gray-900 text-white py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- 
+      - On mobile: single column, centered items, text centered  
+      - On md+: three columns, left-aligned text  
+    -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center md:justify-items-stretch text-center md:text-left">
+      <div>
+        <div class="text-2xl font-bold mb-4">SEAKERS</div>
+        <p class="text-gray-400">
+          Building belonging for Southeast Asian professionals in Europe through community, 
+          culture, and connection.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Programs</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li>SEA After Dark</li>
+          <li>Career Workshops</li>
+          <li>Digital Storytelling</li>
+          <li>Wellness Sessions</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Connect</h3>
+        <ul class="space-y-2 text-gray-400">
+          <li>Email: hello@seakers.nl</li>
+          <li>Webiste: seakers.nl</li>
+          <li>Socials: @seakers.nl</li>
+        </ul>
+      </div>
+    </div>
 
-  <!-- Mobile Menu Script -->
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+      <p>&copy; 2025 SEAKERS. WE THE BESH</p>
+    </div>
+  </div>
+</footer>
+
+
+
+  <!-- Scripts -->
   <script>
-    function toggleMenu() {
-      const nav = document.getElementById('nav-links');
-      nav.classList.toggle('hidden');
-      nav.classList.toggle('flex');
-      nav.classList.toggle('flex-col');
-      nav.classList.toggle('absolute');
-      nav.classList.toggle('right-4');
-      nav.classList.toggle('bg-blue-600');
-      nav.classList.toggle('top-20');
-      nav.classList.toggle('space-y-4');
-      nav.classList.toggle('text-right');
-      nav.classList.toggle('w-48');
-      nav.classList.toggle('p-4');
-      nav.classList.toggle('rounded');
-      nav.classList.toggle('z-50');
-    }
-  </script>
+    // Fade-in observer
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+    });
 
+  
+  </script>
 </body>
 </html>
